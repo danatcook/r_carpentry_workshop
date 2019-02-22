@@ -1,5 +1,7 @@
 ##############################################
-##### R CARPENTRY WORKSHOP ######## 
+##### R SOFTWARE CARPENTRY WORKSHOP ######## 
+# friday, february 22, 2019
+# dana cook
 
 # make 'cats' dataframe:
 cats <- data.frame(coat=c("calico","black","tabby"),weight=c(2.1,3.4,5.6),likes_string=c(1, 0, 1)) # 
@@ -47,7 +49,7 @@ another_vector <- vector(mode = 'character', length = 3)
 another_vector
 str(another_vector)
 # return is 'chr' (character data type), '[1:3]' (1 row, 3 columns), and "" "" "" (what the values are)
-str(cats$weight)
+str(cats$weight) # str is for 'structure'
 
 
 # make another vector to see how R classifies data into types (cannot have different types of data in one vector):
@@ -111,9 +113,167 @@ my_example
 
 ##########################################################
 ##### DATA FRAMES #####
-# vector is one data type
+# vector is made up of one data type
 # rows are made of different data types
 # list is a mix of data types
+
+# rows are lists, and columns are vectors
+
+#the difference between a 'vector' and a 'factor':
+#a vector is a string, where a factor is one type of data
+
+str(cats$weight) # str = structure
+
+# logical values get stored as inteters of '0' and '1' (in GitHub? or in R?)
+# factors get stored as integers, but another part of the data structure keeps track of the values
+
+
+############################################################
+##### EXPLORING DATA FRAMES #######
+
+# create 'cats' dataframe:
+cats <- data.frame(coat = c("calico", "black", "tabby"), 
+                   weight = c(2.1, 5.0,3.2), 
+                   likes_string = c(1, 0, 1))
+# add 'age' vector:
+age <- c(2, 3, 5)
+
+#combine 'cats' and 'age' dataframes:
+cats <- cbind(cats, age)
+
+newRow <- list("tortoiseshell", 3.3, TRUE, 9)
+cats <- rbind(cats, newRow)
+
+cats$coat <- as.character(cats$coat)
+cats
+str(cats)
+
+################
+# create new coat factor, 'tortoiseshell':
+levels(cats$coat) <- c(levels(cats$coat), "tortoiseshell")
+
+# to add to cats df, you must add values to fill the other factors (columns):
+cats <- rbind(cats, list("tortoiseshell", 3.3, TRUE, 9))
+
+# change coat values to characters:
+cats$coat <- as.character(cats$coat)
+str(cats) # see structure (data types)
+
+cats
+
+
+# when you're adding columns, you add a vector
+# when you're adding rows, you add a list
+
+####### Dataframe Challenge ##############
+
+human_age <- cats$age *7
+human_age
+
+human_age <- as.factor(human_age) # change from numeric to factor
+str(human_age)
+
+human_age <- as.numeric(human_age) # change from factor to numeric
+str(human_age)
+
+human_age <- human_age /7 # divide each value by 7
+human_age
+
+
+# start with numeric, convert to character, convert to factor, then can convert back to numeric and you will start with same numeric values
+
+
+#################################################################
+
+
+###### GRAPHS with ggplot #######
+
+library("ggplot2")
+
+# iniate new variable called gapminder, to read gapminder file in dataset
+gapminder <- read.csv("data/gapminder_data.csv", header=TRUE)
+
+# visually inspect gapminder
+View(gapminder)
+
+# data subsetting
+gapminder[1,1] # returns values of row 1, column 1
+
+# look at row 1
+gapminder[1, ] # returns all of row 1, since we left column blank
+
+# preview top few lines
+head(gapminder)
+
+#preview bottom few lines
+tail(gapminder)
+
+#let's look at the middle
+#1704 observations by 6 variables = 1704 rows, 6 columns, so set parameters to 900-905 rows, leave column blank to show all columns)
+gapminder[900:905, ]
+
+###################################################
+
+
+
+#install.packages("ggplot2")
+library("ggplot2")
+
+str(gapminder) # can use this to see column names - know what to put in for x and y values for ggplot
+# OR
+colnames(gapminder) #returns the column names  
+
+#call ggplot function to create new plot, GLOBAL option, applies to ALL layers
+# aes - aesthetic properties, x and y locations; look for column headings
+# geom - this layer tells how we want to visually represent data (geom_point - scatterplot)
+
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point()
+
+
+#easy CHALLENGE 1
+# modify the line below to show how life expectancy has changed over time
+
+ggplot(data = gapminder, aes(x = year, y = lifeExp)) +
+  geom_point()
+
+
+#medium CHALLENGE 2
+#aesthetic property of color
+#modify code to color the points by continent column
+#what trends do you see? are they what you expected?
+
+ggplot(data = gapminder, aes(x = year, y = lifeExp, colour = continent)) +
+  geom_point()
+
+
+##### LAYERS ##########
+#scatterplot is hard to visualize change over time
+#line plot instead
+#add geom_line layer instead of geom_point
+#by aesthetic draws line for each country
+
+ggplot(data = gapminder, aes( x=year, y=lifeExp, by=country, colour=continent)) +
+  geom_line()
+
+str(gapminder)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
