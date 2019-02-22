@@ -258,6 +258,89 @@ ggplot(data = gapminder, aes( x=year, y=lifeExp, by=country, colour=continent)) 
 
 str(gapminder)
 
+#add column of countries as characters, instead of factors
+countries_character <- as.character(gapminder$country)
+gapminder2 <- cbind(gapminder,countries_character)
+
+#View(gapminder2)
+
+ggplot(data = gapminder2, aes( x=year, y=lifeExp, by=countries_character, colour=continent)) +
+  geom_line()
+
+#plots came out the same for countries read as factor and countries read as character
+
+
+ggplot(data = gapminder, aes( x=year, y=lifeExp, by=continent, colour=continent)) +
+  geom_line()
+
+#set year as factor in gapminder2 df
+#gapminder2$year <- as.factor(gapminder2$year)
+#ggplot(data = gapminder2, aes( x=year, y=lifeExp, by=continent, colour=continent)) +
+  geom_line()
+gapminder2$year <- as.integer(gapminder2$year)
+str(gapminder2)
+
+ggplot(data = gapminder, aes( x=year, y=lifeExp, by=country, colour=continent)) +
+  geom_line() + 
+  geom_point() +
+  theme_bw() #took away ugly gray background
+
+###### TRANSFORMATION AND STATISTICS ##########
+#overlay statistical models over data
+#color by continent
+
+ggplot(data = gapminder, aes( x=gdpPercap, y=lifeExp, colour=continent)) +
+  geom_point()
+
+#hard to see relationship due to the points due to some outliers
+#we can change the scale of the units with the scale function
+#scale function controsl data and visual values, alpha function controls transparency, which can be helpful when we have a large amount of data that is clustered
+
+#use scale function (change x axis), alpha function (transparency)
+ggplot(data = gapminder, aes( x=gdpPercap, y=lifeExp, color=continent)) +
+  geom_point(alpha=0.5) +
+  scale_x_log10() + #transforms scale to a log base 10
+  theme_bw()
+
+#geom_smooth, adding another layer here
+ggplot(data = gapminder, aes( x=gdpPercap, y=lifeExp, color=continent)) +
+  geom_point(alpha=0.5) +
+  scale_x_log10() + #transforms scale to a log base 10
+  theme_bw() +
+  geom_smooth(method="lm") #adds regression (least squares) for each continent, relationship between gdpPercap and lifeExp
+
+#make line thicker
+ggplot(data = gapminder, aes( x=gdpPercap, y=lifeExp, color=continent)) +
+  geom_point(alpha=0.5) +
+  scale_x_log10() + #transforms scale to a log base 10
+  theme_bw() +
+  geom_smooth(method="lm", size=1.5)
+
+#CHALLENGE
+#modify color and size of points on the point layer in the previous example
+#hint: do not use the aes function
+
+ggplot(data = gapminder, aes( x=gdpPercap, y=lifeExp, color=continent)) +
+  geom_point(alpha=0.5, size=2, shape=7) +
+  scale_x_log10() + #transforms scale to a log base 10
+  theme_bw() +
+  geom_smooth(method="lm", size=1.5)
+
+
+#create multi-panel figures with facet_wrap()
+ggplot(data = gapminder, aes( x=gdpPercap, y=lifeExp, color=continent)) +
+  geom_point(alpha=0.5, size=0.5) +
+  scale_x_log10() + #transforms scale to a log base 10
+  theme_bw() +
+  geom_smooth(method="lm", size=1.5) +
+  facet_wrap( ~ continent)
+
+
+
+
+
+
+
 
 
 
