@@ -102,12 +102,41 @@ gdp_pop_summary <- gapminder %>%
 
 
 
+############ HOUSEKEEPING YOUR CODE ################
+
+# Ctrl+Shift+r or Code > Insert Section --> R studio will create a nice formatted section 'Insert Section"
+
+
+# Section 1 ---------------------------------------------------------------
+
+# this is my code in section 1
+
+
+# Section 2 ---------------------------------------------------------------
+
+# this is my code for section 2, and I can use the little arrow to toggle to minimize sections
 
 
 
+### Tip: know that your code is doing the right thing!
 
+### Tip: don't repeat yourself
+#if you find yourself of writing the same code over and over again, there's probably a better, more efficient way of doing it to shorten your work (or use PIPE in dplyr)
 
+### Tip: remember to be stylish
+# use similar names, capitalization, CamelCase, spacing, etc.
 
+######## ORGANIZING FOLDER ################
+
+# within your project directory:
+# organize r scripts with numbers in how you run them sequentially (first - data prep/wrangling, second - analysis, third - figures) (Mary's example: 1_data_prep_fish.R, 2_data_prep_MPAs.R, 3_bayes_anaysis.R, 4_figure_prep.R)
+# have an RProject file (big3_parrotfish.Rproj)
+# have a data folder within the project's folder
+# have an output file
+
+# really document what your data means (include units, descriptions, detailed METADATA, dataframe dimensions)
+
+# Mary Donovan is really good at data organization and curating metadata 
 
 
 
